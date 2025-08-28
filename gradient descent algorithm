@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+np.random.seed(42)
+X = 2 * np.random.rand(100, 1)
+y = 4 + 3 * X + np.random.randn(100, 1)
+theta = np.random.randn(2,1)
+learning_rate = 0.1
+iterations = 50
+m = len(X)
+X_b = np.c_[np.ones((m,1)), X]
+cost_history = []
+for i in range(iterations):
+    gradients = 2/m * X_b.T.dot(X_b.dot(theta) - y)
+    theta = theta - learning_rate * gradients
+    cost = (1/m) * np.sum((X_b.dot(theta) - y)**2)
+    cost_history.append(cost)
+    if i % 10 == 0:
+        print(f"Iteration {i}: Cost = {cost:.4f}")
+print("\nFinal Parameters:")
+print(f"Intercept: {theta[0][0]:.4f}, Slope: {theta[1][0]:.4f}")
+plt.figure(figsize=(6,4))
+plt.plot(range(iterations), cost_history, marker='o')
+plt.xlabel("Iteration")
+plt.ylabel("Cost (MSE)")
+plt.title("Gradient Descent Performance")
+plt.grid(True)
+plt.show()
+plt.figure(figsize=(6,4))
+plt.scatter(X, y, color='blue', label='Data points')
+plt.plot(X, X_b.dot(theta), color='red', label='Regression line')
+plt.xlabel("X")
+plt.ylabel("y")
+plt.title("Linear Regression using Gradient Descent")
+plt.legend()
+plt.show()
