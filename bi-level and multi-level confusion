@@ -1,0 +1,23 @@
+import numpy as np
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
+import matplotlib.pyplot as plt
+y_true_binary = [0, 1, 0, 1, 0, 1, 1, 0, 1, 0]
+y_pred_binary = [0, 0, 0, 1, 0, 1, 1, 0, 1, 1]
+cm_binary = confusion_matrix(y_true_binary, y_pred_binary)
+print("Bi-level Confusion Matrix:\n", cm_binary)
+disp_binary = ConfusionMatrixDisplay(confusion_matrix=cm_binary, display_labels=[0, 1])
+disp_binary.plot(cmap="Blues")
+plt.title("Binary Confusion Matrix")
+plt.show()
+print("\nBinary Classification Report:\n")
+print(classification_report(y_true_binary, y_pred_binary))
+y_true_multi = [0, 1, 2, 2, 0, 1, 0, 2, 1, 0]
+y_pred_multi = [0, 2, 2, 2, 0, 0, 1, 2, 1, 0]
+cm_multi = confusion_matrix(y_true_multi, y_pred_multi)
+print("\nMulti-level Confusion Matrix:\n", cm_multi)
+disp_multi = ConfusionMatrixDisplay(confusion_matrix=cm_multi, display_labels=["Cat", "Dog", "Rabbit"])
+disp_multi.plot(cmap="Greens")
+plt.title("Multi-class Confusion Matrix")
+plt.show()
+print("\nMulti-class Classification Report:\n")
+print(classification_report(y_true_multi, y_pred_multi, target_names=["Cat", "Dog", "Rabbit"]))
